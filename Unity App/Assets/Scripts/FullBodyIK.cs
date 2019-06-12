@@ -1,6 +1,3 @@
-﻿// Copyright (c) 2016 Nora
-// Released under the MIT license
-// http://opensource.org/licenses/mit-license.php
 
 #if SAFULLBODYIK_DEBUG
 #define SAFULLBODYIK_DEBUG_CONSTRUCT_TIME
@@ -638,7 +635,7 @@ namespace SA
 			public HeadIK headIK = new HeadIK();
 		}
 
-		// Memo: Not Serializable
+		// 
 		public class BoneCaches
 		{
 			public struct HipsToFootLength
@@ -863,7 +860,7 @@ namespace SA
 			return false;
 		}
 
-		// - Call from Editor script.
+		// 
 		public void Prefix( Transform rootTransform_ )
 		{
 			if( rootTransform != rootTransform_ ) {
@@ -873,8 +870,7 @@ namespace SA
 			_Prefix();
 		}
 
-		// - Call from FullBodyIKBehaviour.Awake() / FullBodyIK.Initialize().
-		// - Bone transforms are null yet.
+		
 		void _Prefix()
 		{
 			if( _isPrefixed ) {
@@ -1894,7 +1890,7 @@ namespace SA
 
 		//----------------------------------------------------------------------------------------------------------------------------
 
-		// Custom Solver.
+	
 		public virtual bool _IsHiddenCustomEyes()
 		{
 			return false;
