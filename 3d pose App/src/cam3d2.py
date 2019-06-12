@@ -1,9 +1,4 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Tue Feb 20 11:47:50 2018
 
-@author: KEEL
-"""
 import argparse
 import cv2
 import logging
