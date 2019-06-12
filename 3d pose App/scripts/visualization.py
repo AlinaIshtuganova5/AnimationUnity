@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+
 import time
 import cv2
 import rospy
@@ -10,10 +10,8 @@ from estimator import Human, BodyPart, TfPoseEstimator
 
 
 class VideoFrames:
-    """
-    Reference : ros-video-recorder
-    https://github.com/ildoonet/ros-video-recorder/blob/master/scripts/recorder.py
-    """
+   
+ 
     def __init__(self, image_topic):
         self.image_sub = rospy.Subscriber(image_topic, Image, self.callback_image, queue_size=1)
         self.bridge = CvBridge()
@@ -52,7 +50,6 @@ def cb_pose(data):
     if resize_ratio > 0:
         image = cv2.resize(image, (int(resize_ratio*w), int(resize_ratio*h)), interpolation=cv2.INTER_LINEAR)
 
-    # ros topic to Person instance
     humans = []
     for p_idx, person in enumerate(data.persons):
         human = Human([])
@@ -62,7 +59,7 @@ def cb_pose(data):
 
         humans.append(human)
 
-    # draw
+
     image = TfPoseEstimator.draw_humans(image, humans, imgcopy=False)
     pub_img.publish(cv_bridge.cv2_to_imgmsg(image, 'bgr8'))
 
@@ -71,22 +68,20 @@ if __name__ == '__main__':
     rospy.loginfo('initialization+')
     rospy.init_node('TfPoseEstimatorROS-Visualization', anonymous=True)
 
-    # topics params
     image_topic = rospy.get_param('~camera', '')
     pose_topic = rospy.get_param('~pose', '/pose_estimator/pose')
 
     resize_ratio = float(rospy.get_param('~resize_ratio', '-1'))
 
-    # publishers
+
     pub_img = rospy.Publisher('~output', Image, queue_size=1)
 
-    # initialization
+
     cv_bridge = CvBridge()
     vf = VideoFrames(image_topic)
     rospy.wait_for_message(image_topic, Image, timeout=30)
 
-    # subscribers
     rospy.Subscriber(pose_topic, Persons, cb_pose, queue_size=1)
 
-    # run
+  
     rospy.spin()
